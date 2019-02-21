@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //        SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setColorScheme(SignInButton.COLOR_LIGHT);
+        setGooglePlusButtonText(signInButton, getResources().getString(R.string.login_with_gmail));
     }
 
     @Override
@@ -139,14 +140,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    protected void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
+        // Find the TextView that is inside of the SignInButton and set its text
+        for (int i = 0; i < signInButton.getChildCount(); i++) {
+            View v = signInButton.getChildAt(i);
+
+            if (v instanceof TextView) {
+                TextView tv = (TextView) v;
+                tv.setText(buttonText);
+                return;
+            }
+        }
+    }
+
     @OnClick(R.id.bt_sign_in)
     public void onClick(View v) {
         signIn();
     }
 
+    @OnClick(R.id.tv_register_now)
     public void registerUser(View v){
-        Toast.makeText(getApplicationContext(),
-                "Toast por defecto", Toast.LENGTH_SHORT);
+        startRegisterActivity();
+    }
+
+    @OnClick(R.id.tv_no_account)
+    public void registerUser2(View v){
+        startRegisterActivity();
+    }
+
+    public void startRegisterActivity() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
 }

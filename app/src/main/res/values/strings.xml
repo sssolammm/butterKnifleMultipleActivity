@@ -5,4 +5,7 @@
     <string name="login_login">Login</string>
     <string name="login_register_now">Register now</string>
     <string name="login_no_account">No account?</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="login_with_gmail">Login with Gmail</string>
 </resources>
