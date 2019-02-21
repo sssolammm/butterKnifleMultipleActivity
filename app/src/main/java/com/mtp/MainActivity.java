@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -142,4 +143,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View v) {
         signIn();
     }
+
+    public void registerUser(View v){
+        Toast.makeText(getApplicationContext(),
+                "Toast por defecto", Toast.LENGTH_SHORT);
+    }
+
 }

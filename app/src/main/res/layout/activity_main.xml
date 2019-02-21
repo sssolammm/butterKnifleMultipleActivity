@@ -41,7 +41,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
-        android:textColorHint="@color/colorPrimary"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,19 +102,5 @@
         android:layout_height="40dp"
         android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-    <!--<TextView-->
-        <!--android:id="@+id/tv_register_now"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="25dp"-->
-        <!--android:layout_marginBottom="0dp"-->
-        <!--android:singleLine="true"-->
-        <!--android:text="No account? Register now"-->
-        <!--android:background="@color/colorBlackOpacity50"-->
-        <!--android:textColor="@color/colorWhite"-->
-        <!--android:gravity="center"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent" />-->
 
 </android.support.constraint.ConstraintLayout>
