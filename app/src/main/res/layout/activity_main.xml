@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWood"
     tools:context=".MainActivity">
 
     <com.google.android.gms.common.SignInButton
@@ -76,7 +77,7 @@
             android:id="@+id/editText_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:singleLine="true"
             android:hint="@string/login_password"
             android:inputType="textPassword"
             android:textColor="@color/colorPrimary"
@@ -94,5 +95,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelPassword" />
+
+    <include
+        android:id="@+id/includedLayout"
+        layout="@layout/login_register_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_register_now"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_marginBottom="0dp"-->
+        <!--android:singleLine="true"-->
+        <!--android:text="No account? Register now"-->
+        <!--android:background="@color/colorBlackOpacity50"-->
+        <!--android:textColor="@color/colorWhite"-->
+        <!--android:gravity="center"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent" />-->
 
 </android.support.constraint.ConstraintLayout>
