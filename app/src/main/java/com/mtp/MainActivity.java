@@ -1,12 +1,15 @@
 package com.mtp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        // Close keyboard on background click
+        ConstraintLayout constrainLayout= (ConstraintLayout) findViewById(R.id.backgroundWallpaper);
+        constrainLayout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                hideSoftKeyboard(MainActivity.this);
+            }
+        });
+
+
 
 //        findViewById(R.id.sign_out_button).setOnClickListener(this);
 //        findViewById(R.id.disconnect_button).setOnClickListener(this);
@@ -105,9 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
                         updateUI(null);
-                        // [END_EXCLUDE]
                     }
                 });
     }
@@ -117,9 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
                         updateUI(null);
-                        // [END_EXCLUDE]
                     }
                 });
     }
@@ -151,6 +160,14 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     @OnClick(R.id.bt_sign_in)

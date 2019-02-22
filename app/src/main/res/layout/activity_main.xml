@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWood"
+    android:id="@+id/backgroundWallpaper"
     tools:context=".MainActivity">
 
     <com.google.android.gms.common.SignInButton
