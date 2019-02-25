@@ -18,6 +18,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.bt_sign_in_gmail)
     SignInButton signInButtonGmail;
+
+    @BindView(R.id.bt_sign_in_facebook)
+    LoginButton signInButtonFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,15 @@ public class MainActivity extends AppCompatActivity {
                     // App code
                     Toast.makeText(getApplicationContext(), "This is my Toast message!",
                             Toast.LENGTH_LONG).show();
+
+//REVISAR SI CAL
+//                    login.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
+//                    login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//                        @Override
+//                        public void onSuccess(LoginResult loginResult) {
+//                            //Log.d("facebook", "succes" + loginResult.getAccessToken().getToken() + "id" + loginResult.getAccessToken().getExpires() + "data" + loginResult.getAccessToken().getUserId());
+//                            conectedwithFacebook(loginResult.getAccessToken().getToken(),intent);
+//                        }
                 }
 
                 @Override
@@ -100,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         signInButtonGmail.setSize(SignInButton.SIZE_STANDARD);
         signInButtonGmail.setColorScheme(SignInButton.COLOR_LIGHT);
         setGooglePlusButtonText(signInButtonGmail, getResources().getString(R.string.login_with_gmail));
+
+        signInButtonFacebook.setText("hihi");
     }
 
     @Override
