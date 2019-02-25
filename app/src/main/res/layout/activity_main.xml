@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/bt_sign_in"
+        android:id="@+id/bt_sign_in_gmail"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -19,6 +19,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/FrameLayout1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/bt_sign_in_gmail"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--<com.facebook.login.widget.LoginButton-->
+            <!--android:id="@+id/bt_sign_in_facebook"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toEndOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--android:visibility="gone" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/bt_sign_in_facebook_show"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#416BC1"-->
+            <!--android:text="FaceBook Login"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toEndOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/bt_sign_in_facebook"
+        android:layout_width="170dp"
+        android:layout_height="109dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt_sign_in_gmail"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iconImageView"
@@ -32,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bt_sign_in" />
+        app:layout_constraintTop_toTopOf="@+id/bt_sign_in_gmail" />
 
 
     <android.support.design.widget.TextInputLayout

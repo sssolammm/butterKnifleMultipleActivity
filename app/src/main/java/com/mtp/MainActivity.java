@@ -11,7 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
+    private CallbackManager callbackManager;
 
-    @BindView(R.id.bt_sign_in)
-    SignInButton signInButton;
+
+    @BindView(R.id.bt_sign_in_gmail)
+    SignInButton signInButtonGmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +50,36 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Close keyboard on background click
-        ConstraintLayout constrainLayout= (ConstraintLayout) findViewById(R.id.backgroundWallpaper);
+        ConstraintLayout constrainLayout = findViewById(R.id.backgroundWallpaper);
         constrainLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 hideSoftKeyboard(MainActivity.this);
             }
         });
 
+
+        // Facebook LogIn
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+            new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    // App code
+                    Toast.makeText(getApplicationContext(), "This is my Toast message!",
+                            Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onCancel() {
+                    // App code
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    // App code
+                }
+        });
 
 
 //        findViewById(R.id.sign_out_button).setOnClickListener(this);
@@ -66,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the dimensions of the sign-in button.
 //        SignInButton signInButton = findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setColorScheme(SignInButton.COLOR_LIGHT);
-        setGooglePlusButtonText(signInButton, getResources().getString(R.string.login_with_gmail));
+        signInButtonGmail.setSize(SignInButton.SIZE_STANDARD);
+        signInButtonGmail.setColorScheme(SignInButton.COLOR_LIGHT);
+        setGooglePlusButtonText(signInButtonGmail, getResources().getString(R.string.login_with_gmail));
     }
 
     @Override
@@ -81,8 +112,10 @@ public class MainActivity extends AppCompatActivity {
         updateUI(account);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
@@ -137,13 +170,13 @@ public class MainActivity extends AppCompatActivity {
         if (account != null) {
 //            mStatusTextView.setText(account.getAccount().name);
 
-            signInButton.setVisibility(View.GONE);
+            signInButtonGmail.setVisibility(View.GONE);
 //            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 //            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
 //            mStatusTextView.setText(R.string.signed_out);
 
-            signInButton.setVisibility(View.VISIBLE);
+            signInButtonGmail.setVisibility(View.VISIBLE);
 //            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
 //            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
@@ -170,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
 
-    @OnClick(R.id.bt_sign_in)
+    @OnClick(R.id.bt_sign_in_gmail)
     public void onClick(View v) {
         signIn();
     }

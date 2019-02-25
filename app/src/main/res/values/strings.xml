@@ -1,4 +1,8 @@
 <resources>
+    <string name="facebook_app_id">253163152258200</string>
+    <string name="fb_login_protocol_scheme">fb253163152258200</string>
+
+
     <string name="app_name">Meeting Point</string>
     <string name="login_username">Username</string>
     <string name="title_activity_register">RegisterActivity</string>
