@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -23,7 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,15 +31,19 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    // ICON PAGE
+    // https://icons8.com/icon/set/google/color
+//    otra https://www.iconfinder.com/search/?q=facebook&style=glyph
+
+
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
     private CallbackManager callbackManager;
 
-
-    @BindView(R.id.bt_sign_in_gmail)
-    SignInButton signInButtonGmail;
+//    @BindView(R.id.bt_sign_in_gmail)
+//    SignInButton signInButtonGmail;
 
     @BindView(R.id.bt_sign_in_facebook)
     LoginButton signInButtonFacebook;
@@ -70,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
                     // App code
-                    Toast.makeText(getApplicationContext(), "This is my Toast message!",
-                            Toast.LENGTH_LONG).show();
+                    openLocationActivity();
 
 //REVISAR SI CAL
 //                    login.setReadPermissions(Arrays.asList("public_profile", "user_friends"));
@@ -108,19 +108,11 @@ public class MainActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Set the dimensions of the sign-in button.
-//        SignInButton signInButton = findViewById(R.id.sign_in_button);
-        signInButtonGmail.setSize(SignInButton.SIZE_STANDARD);
-        signInButtonGmail.setColorScheme(SignInButton.COLOR_LIGHT);
-        setGooglePlusButtonText(signInButtonGmail, getResources().getString(R.string.login_with_gmail));
-
-        signInButtonFacebook.setText("hihi");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
@@ -148,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
+            openLocationActivity();
+
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -157,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        Intent signInGmailIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInGmailIntent, RC_SIGN_IN);
     }
 
     private void signOut() {
@@ -185,28 +179,15 @@ public class MainActivity extends AppCompatActivity {
         if (account != null) {
 //            mStatusTextView.setText(account.getAccount().name);
 
-            signInButtonGmail.setVisibility(View.GONE);
+//            signInButtonGmail.setVisibility(View.GONE);
 //            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 //            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
 //            mStatusTextView.setText(R.string.signed_out);
 
-            signInButtonGmail.setVisibility(View.VISIBLE);
+//            signInButtonGmail.setVisibility(View.VISIBLE);
 //            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
 //            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
-        }
-    }
-
-    protected void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
-        // Find the TextView that is inside of the SignInButton and set its text
-        for (int i = 0; i < signInButton.getChildCount(); i++) {
-            View v = signInButton.getChildAt(i);
-
-            if (v instanceof TextView) {
-                TextView tv = (TextView) v;
-                tv.setText(buttonText);
-                return;
-            }
         }
     }
 
@@ -216,11 +197,6 @@ public class MainActivity extends AppCompatActivity {
                         Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
-    }
-
-    @OnClick(R.id.bt_sign_in_gmail)
-    public void onClick(View v) {
-        signIn();
     }
 
     @OnClick(R.id.tv_register_now)
@@ -233,8 +209,23 @@ public class MainActivity extends AppCompatActivity {
         startRegisterActivity();
     }
 
+    @OnClick(R.id.bt_sign_in_facebook_show)
+    public void activeOnClickFacebookButton(View v){
+        signInButtonFacebook.callOnClick();
+    }
+
+    @OnClick(R.id.bt_sign_in_gmail_show)
+    public void activeOnClickGmailButton(View v){
+        signIn();
+    }
+
     public void startRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void openLocationActivity(){
+        Intent intent = new Intent(this, LocationActivity.class);
         startActivity(intent);
     }
 

@@ -8,6 +8,7 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="login_with_gmail">Login with Gmail</string>
+    <string name="login_with_facebook">Login with Facebook</string>
     <string name="login_password">Password</string>
     <string name="login_repeat_password">Repeat password</string>
     <string name="login_login">Login</string>
@@ -15,5 +16,6 @@
     <string name="login_email">Email</string>
     <string name="login_register_now">Register now</string>
     <string name="login_no_account">No account?</string>
+    <string name="title_activity_location">Map</string>
 
 </resources>

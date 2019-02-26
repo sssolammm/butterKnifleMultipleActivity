@@ -8,85 +8,92 @@
     android:id="@+id/backgroundWallpaper"
     tools:context=".MainActivity">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/bt_sign_in_gmail"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="48dp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <!--<FrameLayout-->
-        <!--android:id="@+id/FrameLayout1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/bt_sign_in_gmail"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--<com.facebook.login.widget.LoginButton-->
-            <!--android:id="@+id/bt_sign_in_facebook"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--android:visibility="gone" />-->
-
-        <!--<Button-->
-            <!--android:id="@+id/bt_sign_in_facebook_show"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="#416BC1"-->
-            <!--android:text="FaceBook Login"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textStyle="bold"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/bt_sign_in_facebook"
-        android:layout_width="170dp"
-        android:layout_height="109dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bt_sign_in_gmail"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/iconImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:scaleType="fitCenter"
         android:src="@drawable/connection"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bt_sign_in_gmail" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!--<com.google.android.gms.common.SignInButton-->
+        <!--android:id="@+id/bt_sign_in_gmail"-->
+        <!--android:layout_width="170dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_marginStart="5dp"-->
+        <!--android:layout_marginTop="48dp"-->
+        <!--android:visibility="invisible"-->
+        <!--tools:visibility="invisible"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <Button
+        android:id="@+id/bt_sign_in_gmail_show"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bt_login_gmail_rounded"
+        android:text="@string/login_with_gmail"
+        android:textColor="#000"
+        android:textAllCaps="false"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="28dp"
+        android:drawableLeft="@drawable/ic_gmail"
+        android:drawablePadding="0dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iconImageView" />
+
+    <Button
+        android:id="@+id/bt_sign_in_facebook_show"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bt_login_facebook_rounded"
+        android:text="@string/login_with_facebook"
+        android:textColor="#ffffff"
+        android:textAllCaps="false"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="5dp"
+        android:drawableLeft="@drawable/ic_facebook"
+        android:drawablePadding="0dp"
+        android:padding="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt_sign_in_gmail_show"
+        app:layout_constraintTop_toBottomOf="@id/iconImageView" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/bt_sign_in_facebook"
+        android:layout_width="170dp"
+        android:layout_height="109dp"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt_sign_in_gmail_show"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/labelUsername"
         android:layout_width="340dp"
         android:layout_height="84dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="34dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconImageView">
+        app:layout_constraintTop_toBottomOf="@+id/bt_sign_in_gmail_show">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editText_username"
