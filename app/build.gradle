@@ -41,16 +41,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //Butter knife
-//    implementation 'com.jakewharton:butterknife:9.0.0'
-//    implementation 'com.jakewharton:butterknife-annotations:9.0.0-20180911.194826-66'
-//    implementation 'com.jakewharton:butterknife-runtime:9.0.0-20180911.194841-24'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-20180911.194829-66'
     implementation 'com.jakewharton:butterknife:8.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.0'
 
     // Facebook login
     implementation 'com.facebook.android:facebook-login:[4,5)'
 
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

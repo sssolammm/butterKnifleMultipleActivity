@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -24,10 +25,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mtp.Model.StaticLocation;
+import com.mtp.Sync.RestRequests;
+import com.mtp.Sync.RetrofitClient;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,21 +103,35 @@ public class MainActivity extends AppCompatActivity {
                 }
         });
 
-
-//        findViewById(R.id.sign_out_button).setOnClickListener(this);
-//        findViewById(R.id.disconnect_button).setOnClickListener(this);
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        // [END configure_signin]
-
-        // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
+        createRequest();
     }
+
+    private void createRequest(){
+        //Create a handler for the RetrofitInstance interface//
+        RestRequests restRequests = RetrofitClient.getRetrofitInstance().create(RestRequests.class);
+        Call<List<StaticLocation>> call = restRequests.getUsers();
+
+        call.enqueue(new Callback<List<StaticLocation>>() {
+
+            @Override
+            public void onResponse(Call<List<StaticLocation>> call, Response<List<StaticLocation>> response) {
+                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<StaticLocation>> call, Throwable throwable) {
+                Toast.makeText(MainActivity.this, "Unable to load users", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
     @Override
     public void onStart() {
@@ -176,19 +199,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(@Nullable GoogleSignInAccount account) {
-        if (account != null) {
-//            mStatusTextView.setText(account.getAccount().name);
-
-//            signInButtonGmail.setVisibility(View.GONE);
-//            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-        } else {
-//            mStatusTextView.setText(R.string.signed_out);
-
-//            signInButtonGmail.setVisibility(View.VISIBLE);
-//            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
-        }
     }
 
     public static void hideSoftKeyboard(Activity activity) {
@@ -225,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLocationActivity(){
-        Intent intent = new Intent(this, LocationActivity.class);
+        Intent intent = new Intent(this, TabContainerActivity.class);
         startActivity(intent);
     }
 

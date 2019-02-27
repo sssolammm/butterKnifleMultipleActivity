@@ -1,0 +1,44 @@
+package com.mtp.Model;
+
+import com.google.gson.annotations.SerializedName;
+
+public class StaticLocation {
+
+    private String name;
+
+//    @SerializedName("longitude")
+//    private Double longitude;
+//
+//    @SerializedName("latitude")
+//    private Double latitude;
+
+//    public StaticLocation(String name, Double longitude, Double latitude){
+//        this.name = name;
+////        this.longitude = longitude;
+////        this.latitude = latitude;
+//    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //    public Double getLongitude() {
+//        return longitude;
+//    }
+//
+//    public void setLongitude(Double longitude) {
+//        this.longitude = longitude;
+//    }
+//
+//    public Double getLatitude() {
+//        return latitude;
+//    }
+//
+//    public void setLatitude(Double latitude) {
+//        this.latitude = latitude;
+//    }
+}

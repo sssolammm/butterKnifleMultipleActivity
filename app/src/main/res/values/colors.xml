@@ -4,7 +4,12 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorBlackOpacity50">#80000000</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="red_dark">#ff3333</color>
+    <color name="grey">#696969</color>
     <color name="colorWood">#c19a6b</color>
+
+
+
 </resources>

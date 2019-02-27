@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_post"
-        android:icon="@drawable/ic_facebook"
-        android:title="Posts"/>
+        android:id="@+id/navigation_facebook"
+        android:icon="@drawable/ic_menu_facebook"
+        android:title="@string/bottom_menu_facebook"/>
 
     <item
         android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_facebook"
-        android:title="Map"/>
+        android:icon="@drawable/ic_menu_map"
+        android:title="@string/bottom_menu_map"/>
 
     <item
         android:id="@+id/navigation_chat"
-        android:icon="@drawable/ic_facebook"
-        android:title="Chat"/>
+        android:icon="@drawable/ic_menu_chat"
+        android:title="@string/bottom_menu_chat"/>
 
 </menu>
