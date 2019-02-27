@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 public interface RestRequests {
 
 
-    @GET(Constants.BASE_URL + "getCoordinates")
+    @GET(Constants.BASE_URL + "coordinates")
     Call<List<StaticLocation>> getAllStaticLocation();
 
     @GET(Constants.BASE_URL + "users")

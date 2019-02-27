@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
 //    otra https://www.iconfinder.com/search/?q=facebook&style=glyph
 
 
+//    ENDPOINT
+    //https://beeceptor.com
+
+
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
@@ -94,11 +98,13 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancel() {
+                    Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
                     // App code
                 }
 
                 @Override
                 public void onError(FacebookException exception) {
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     // App code
                 }
         });
@@ -115,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     private void createRequest(){
         //Create a handler for the RetrofitInstance interface//
         RestRequests restRequests = RetrofitClient.getRetrofitInstance().create(RestRequests.class);
-        Call<List<StaticLocation>> call = restRequests.getUsers();
+        Call<List<StaticLocation>> call = restRequests.getAllStaticLocation();
 
         call.enqueue(new Callback<List<StaticLocation>>() {
 
@@ -222,6 +228,11 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.bt_sign_in_facebook_show)
     public void activeOnClickFacebookButton(View v){
         signInButtonFacebook.callOnClick();
+    }
+
+    @OnClick(R.id.bt_login)
+    public void loginStandard(){
+        openLocationActivity();
     }
 
     @OnClick(R.id.bt_sign_in_gmail_show)
