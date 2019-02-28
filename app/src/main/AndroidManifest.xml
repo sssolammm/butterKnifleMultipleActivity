@@ -9,6 +9,11 @@
     <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <meta-data android:name="DATABASE" android:value="meetingPoint.db" />
+    <meta-data android:name="VERSION" android:value="1" />
+    <meta-data android:name="QUERY_LOG" android:value="true" />
+    <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.mtp" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,8 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapFragmentActivity"></activity>
-        <activity android:name=".TabContainerActivity" />
+        <activity android:name=".Fragment.MapFragmentActivity"></activity>
+        <activity android:name=".Activity.TabContainerActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,12 +39,12 @@
             android:name=".LocationActivity"
             android:label="@string/title_activity_location" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Activity.RegisterActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mtp.RegisterActivity" />
+                android:value="com.mtp.Activity.RegisterActivity" />
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

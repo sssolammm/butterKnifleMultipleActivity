@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -25,9 +26,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mtp.Activity.RegisterActivity;
+import com.mtp.Activity.TabContainerActivity;
+import com.mtp.DAO.StaticLocationDao;
 import com.mtp.Model.StaticLocation;
 import com.mtp.Sync.RestRequests;
 import com.mtp.Sync.RetrofitClient;
+import com.orm.SugarContext;
 
 import java.util.List;
 
@@ -66,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        SugarContext.init(this);
 
         // Close keyboard on background click
         ConstraintLayout constrainLayout = findViewById(R.id.backgroundWallpaper);
@@ -113,29 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-
-        createRequest();
     }
 
-    private void createRequest(){
-        //Create a handler for the RetrofitInstance interface//
-        RestRequests restRequests = RetrofitClient.getRetrofitInstance().create(RestRequests.class);
-        Call<List<StaticLocation>> call = restRequests.getAllStaticLocation();
-
-        call.enqueue(new Callback<List<StaticLocation>>() {
-
-            @Override
-            public void onResponse(Call<List<StaticLocation>> call, Response<List<StaticLocation>> response) {
-                Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<List<StaticLocation>> call, Throwable throwable) {
-                Toast.makeText(MainActivity.this, "Unable to load users", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 
 
@@ -215,6 +201,11 @@ public class MainActivity extends AppCompatActivity {
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
 
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
+    }
+
     @OnClick(R.id.tv_register_now)
     public void registerUser(View v){
         startRegisterActivity();
@@ -227,7 +218,10 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.bt_sign_in_facebook_show)
     public void activeOnClickFacebookButton(View v){
-        signInButtonFacebook.callOnClick();
+        if (isLoggedIn())
+            openLocationActivity();
+        else
+            signInButtonFacebook.callOnClick();
     }
 
     @OnClick(R.id.bt_login)
@@ -246,8 +240,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLocationActivity(){
+        syncStaticData();
+
         Intent intent = new Intent(this, TabContainerActivity.class);
         startActivity(intent);
+    }
+
+    private void syncStaticData(){
+        syncLocation();
+    }
+
+    private void syncLocation(){
+        //Create a handler for the RetrofitInstance interface//
+        RestRequests restRequests = RetrofitClient.getRetrofitInstance().create(RestRequests.class);
+        Call<List<StaticLocation>> call = restRequests.getAllStaticLocation();
+
+        call.enqueue(new Callback<List<StaticLocation>>() {
+
+            @Override
+            public void onResponse(Call<List<StaticLocation>> call, Response<List<StaticLocation>> response) {
+                StaticLocation insertStaticLocation;
+                for ( StaticLocation staticLocation : response.body()){
+                    insertStaticLocation = new StaticLocation(staticLocation.getName(), staticLocation.getLongitude(), staticLocation.getLatitude());
+                    StaticLocationDao.insert(insertStaticLocation);
+                }
+
+                List<StaticLocation> st = StaticLocationDao.getAll();
+
+                Log.d("Error", "Location have been syncronized");
+            }
+
+            @Override
+            public void onFailure(Call<List<StaticLocation>> call, Throwable throwable) {
+                Log.d("Error", "Location have not been syncronized");
+            }
+        });
     }
 
 }
