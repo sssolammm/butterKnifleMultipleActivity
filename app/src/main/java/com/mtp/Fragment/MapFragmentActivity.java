@@ -15,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mtp.DAO.StaticLocationDao;
+import com.mtp.Model.StaticLocation;
 
 
 public class MapFragmentActivity extends SupportMapFragment implements OnMapReadyCallback {
@@ -33,9 +35,12 @@ public class MapFragmentActivity extends SupportMapFragment implements OnMapRead
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        for (StaticLocation staticLocation : StaticLocationDao.getAll()) {
+            mMap.addMarker(new MarkerOptions().position(
+                    new LatLng(staticLocation.getLatitude(), staticLocation.getLongitude()))
+                    .title(staticLocation.getName()));
+        }
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(
+//                new LatLng(staticLocation.getLatitude(), staticLocation.getLongitude())));
     }
 }

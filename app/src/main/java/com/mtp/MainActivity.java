@@ -259,14 +259,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<List<StaticLocation>> call, Response<List<StaticLocation>> response) {
-                StaticLocation insertStaticLocation;
                 for ( StaticLocation staticLocation : response.body()){
-                    insertStaticLocation = new StaticLocation(staticLocation.getName(), staticLocation.getLongitude(), staticLocation.getLatitude());
-                    StaticLocationDao.insert(insertStaticLocation);
+                    if (!StaticLocationDao.existStaticLocation(staticLocation))
+                    StaticLocationDao.insert(staticLocation);
                 }
-
-                List<StaticLocation> st = StaticLocationDao.getAll();
-
                 Log.d("Error", "Location have been syncronized");
             }
 

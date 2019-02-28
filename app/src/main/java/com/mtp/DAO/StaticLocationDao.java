@@ -18,4 +18,9 @@ public class StaticLocationDao {
     public static void insert(StaticLocation staticLocation){
         staticLocation.save();
     }
+
+    public static Boolean existStaticLocation(StaticLocation staticLocation){
+        List<StaticLocation> exitStaticLocation = StaticLocation.findWithQuery(StaticLocation.class, "Select * from static_location where name = ?", staticLocation.getName());
+        return exitStaticLocation.size() > 0;
+    }
 }
