@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
 //    otra https://www.iconfinder.com/search/?q=facebook&style=glyph
 
 
+//    Google map icons
+//    https://mapicons.mapsmarker.com/
+
+
 //    ENDPOINT
     //https://beeceptor.com
 

@@ -13,10 +13,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mtp.DAO.StaticLocationDao;
 import com.mtp.Model.StaticLocation;
+import com.mtp.R;
 
 
 public class MapFragmentActivity extends SupportMapFragment implements OnMapReadyCallback {
@@ -36,9 +38,11 @@ public class MapFragmentActivity extends SupportMapFragment implements OnMapRead
         mMap = googleMap;
 
         for (StaticLocation staticLocation : StaticLocationDao.getAll()) {
-            mMap.addMarker(new MarkerOptions().position(
+            MarkerOptions markerOptions = new MarkerOptions().position(
                     new LatLng(staticLocation.getLatitude(), staticLocation.getLongitude()))
-                    .title(staticLocation.getName()));
+                    .title(staticLocation.getName())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar));
+            mMap.addMarker(markerOptions);
         }
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(
 //                new LatLng(staticLocation.getLatitude(), staticLocation.getLongitude())));
