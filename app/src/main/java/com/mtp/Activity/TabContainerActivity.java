@@ -73,7 +73,4 @@ public class TabContainerActivity extends AppCompatActivity {
 
         return true;
     }
-
-
-
 }

@@ -49,38 +49,41 @@ package com.mtp.Fragment;
 //    }
 //}
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.mtp.DAO.StaticLocationDao;
-import com.mtp.Model.StaticLocation;
+import com.mtp.Adapter.CustomInfoStaticEvent;
+import com.mtp.DAO.EventStaticDao;
+import com.mtp.Model.EventStatic;
 import com.mtp.R;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
-public class MapFragmentActivity extends Fragment {
+public class MapFragmentActivity extends Fragment{
 
     MapView mMapView;
     private GoogleMap googleMap;
+    private FloatingActionButton btAdd;
+    private Boolean activatedAddMarker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_map_fragment, container, false);
 
+        activatedAddMarker = false;
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -92,17 +95,46 @@ public class MapFragmentActivity extends Fragment {
             e.printStackTrace();
         }
 
+        btAdd = rootView.findViewById(R.id.bt_add);
+        btAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewMarker();
+            }
+        });
+
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
-                for (StaticLocation staticLocation : StaticLocationDao.getAll()) {
+
+                CustomInfoStaticEvent customInfoStaticEvent = new CustomInfoStaticEvent(getActivity());
+                mMap.setInfoWindowAdapter(customInfoStaticEvent);
+
+
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+
+                        Toast.makeText(getContext(), ((EventStatic) marker.getTag()).getDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                for (EventStatic eventStatic : EventStaticDao.getAll()) {
                     MarkerOptions markerOptions = new MarkerOptions().position(
-                            new LatLng(staticLocation.getLatitude(), staticLocation.getLongitude()))
-                            .title(staticLocation.getName())
+                            new LatLng(eventStatic.getLatitude(), eventStatic.getLongitude()))
+                            .title(eventStatic.getName())
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar));
-                    mMap.addMarker(markerOptions);
+//                    mMap.addMarker(markerOptions);
+
+//                    InfoWindowData info = new InfoWindowData();
+//                    info.setHotel("Hotel : excellent hotels available");
+
+                    Marker m = mMap.addMarker(markerOptions);
+                    m.setTag(eventStatic);
+//                    m.showInfoWindow();
+
                 }
 
 
@@ -115,20 +147,7 @@ public class MapFragmentActivity extends Fragment {
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-//                        String locAddress = marker.getTitle();
-//                        fillTextViews(locAddress);
-//                        if (previousMarker != null) {
-//                            previousMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-//                        }
-//                        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-//                        previousMarker = marker;
-
-
-                        googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(LayoutInflater.from(getActivity())));
-
-
-                        Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_LONG).show();
-
+                        marker.showInfoWindow();
                         return true;
                     }
                 });
@@ -138,6 +157,36 @@ public class MapFragmentActivity extends Fragment {
 
 
         return rootView;
+    }
+
+    private void createNewMarker() {
+
+        if (activatedAddMarker) {
+            Resources res = getResources();
+            btAdd.setBackgroundDrawable(res.getDrawable(android.R.drawable.ic_input_add));
+
+            activatedAddMarker = false;
+            googleMap.setOnMapClickListener(null);
+        } else {
+            Resources res = getResources();
+            btAdd.setBackgroundDrawable(res.getDrawable(android.R.drawable.ic_input_delete));
+
+            activatedAddMarker = true;
+            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    MarkerOptions marker = new MarkerOptions().position(
+                            latLng)
+                            .title("Hello Maps ");
+                    marker.icon(BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                    googleMap.addMarker(marker);
+                }
+            });
+
+        }
+
+//        btAdd.setBackgroundDrawable();
     }
 
     @Override

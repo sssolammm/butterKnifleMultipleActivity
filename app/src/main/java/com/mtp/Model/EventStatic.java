@@ -4,8 +4,8 @@ import com.orm.SugarRecord;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
 
-@Table(name="static_location")
-public class StaticLocation extends SugarRecord {
+@Table(name="event_static")
+public class EventStatic extends SugarRecord {
 
     @Column(name="name")
     private String name;
@@ -16,9 +16,12 @@ public class StaticLocation extends SugarRecord {
     @Column(name="latitude")
     private Double latitude;
 
-    public StaticLocation() { }
+    @Column(name="detail")
+    private String detail;
 
-    public StaticLocation(String name, Double longitude, Double latitude){
+    public EventStatic() { }
+
+    public EventStatic(String name, Double longitude, Double latitude){
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -46,5 +49,13 @@ public class StaticLocation extends SugarRecord {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

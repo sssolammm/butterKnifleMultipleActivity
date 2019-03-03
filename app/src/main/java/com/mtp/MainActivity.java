@@ -28,8 +28,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mtp.Activity.RegisterActivity;
 import com.mtp.Activity.TabContainerActivity;
-import com.mtp.DAO.StaticLocationDao;
-import com.mtp.Model.StaticLocation;
+import com.mtp.DAO.EventStaticDao;
+import com.mtp.Model.EventStatic;
 import com.mtp.Sync.RestRequests;
 import com.mtp.Sync.RetrofitClient;
 import com.orm.SugarContext;
@@ -244,9 +244,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void openLocationActivity(){
         syncStaticData();
-
-        Intent intent = new Intent(this, TabContainerActivity.class);
-        startActivity(intent);
     }
 
     private void syncStaticData(){
@@ -256,21 +253,24 @@ public class MainActivity extends AppCompatActivity {
     private void syncLocation(){
         //Create a handler for the RetrofitInstance interface//
         RestRequests restRequests = RetrofitClient.getRetrofitInstance().create(RestRequests.class);
-        Call<List<StaticLocation>> call = restRequests.getAllStaticLocation();
+        Call<List<EventStatic>> call = restRequests.getAllEventStatic();
 
-        call.enqueue(new Callback<List<StaticLocation>>() {
+        call.enqueue(new Callback<List<EventStatic>>() {
 
             @Override
-            public void onResponse(Call<List<StaticLocation>> call, Response<List<StaticLocation>> response) {
-                for ( StaticLocation staticLocation : response.body()){
-                    if (!StaticLocationDao.existStaticLocation(staticLocation))
-                    StaticLocationDao.insert(staticLocation);
+            public void onResponse(Call<List<EventStatic>> call, Response<List<EventStatic>> response) {
+                for ( EventStatic eventStatic : response.body()){
+                    if (!EventStaticDao.exist(eventStatic))
+                        EventStaticDao.insert(eventStatic);
                 }
                 Log.d("Error", "Location have been syncronized");
+
+                Intent intent = new Intent(getApplicationContext(), TabContainerActivity.class);
+                startActivity(intent);
             }
 
             @Override
-            public void onFailure(Call<List<StaticLocation>> call, Throwable throwable) {
+            public void onFailure(Call<List<EventStatic>> call, Throwable throwable) {
                 Log.d("Error", "Location have not been syncronized");
             }
         });
