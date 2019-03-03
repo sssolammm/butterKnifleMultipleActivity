@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mtp.Fragment.ChatFragment;
+import com.mtp.Fragment.FacebookFragment;
 import com.mtp.Fragment.MapFragmentActivity;
 import com.mtp.R;
 
@@ -29,13 +31,17 @@ public class TabContainerActivity extends AppCompatActivity {
                         loadFragment(new MapFragmentActivity());
                         return true;
                     case R.id.navigation_chat:
+                        loadFragment(new ChatFragment());
                         return true;
                     case R.id.navigation_facebook:
+                        loadFragment(new FacebookFragment());
                         return true;
                 }
                 return false;
             }
         });
+
+        bottomNavigationView.setSelectedItemId(R.id.navigation_map);
     }
 
     private boolean loadFragment(Fragment fragment) {
