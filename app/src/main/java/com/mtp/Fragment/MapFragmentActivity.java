@@ -1,5 +1,6 @@
 package com.mtp.Fragment;
 
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -7,6 +8,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +58,25 @@ public class MapFragmentActivity extends Fragment{
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNewMarker();
+//                createNewMarker();
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                alert.setTitle("Do you want to logout?");
+                // alert.setMessage("Message");
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //Your action here
+                    }
+                });
+
+                alert.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                            }
+                        });
+
+                alert.show();
             }
         });
 
