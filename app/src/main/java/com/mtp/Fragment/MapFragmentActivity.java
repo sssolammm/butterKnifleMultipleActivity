@@ -1,18 +1,17 @@
 package com.mtp.Fragment;
 
-import android.content.DialogInterface;
-import android.content.res.Resources;
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,25 +57,29 @@ public class MapFragmentActivity extends Fragment{
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                createNewMarker();
+//            createNewMarker();
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                alert.setTitle("Do you want to logout?");
-                // alert.setMessage("Message");
+            // custom dialog
+            final Dialog dialog = new Dialog(getContext());
+            dialog.setContentView(R.layout.dialog_map_layout);
+            dialog.setTitle("Title...");
 
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        //Your action here
-                    }
-                });
+            // set the custom dialog components - text, image and button
+//            TextView text = (TextView) dialog.findViewById(R.id.tv_dialog_name);
+//            text.setText("Android custom dialog example!");
+//            ImageView image = (ImageView) dialog.findViewById(R.id.image);
+//            image.setImageResource(R.drawable.ic_launcher);
 
-                alert.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                            }
-                        });
+//            Button dialogCreateButton = (Button) dialog.findViewById(R.id.bt_dialog_create_marker);
+//            // if button is clicked, close the custom dialog
+//                dialogCreateButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    dialog.dismiss();
+//                }
+//            });
 
-                alert.show();
+            dialog.show();
             }
         });
 

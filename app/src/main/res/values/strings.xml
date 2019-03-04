@@ -23,5 +23,8 @@
     <string name="bottom_menu_chat">Chat</string>
 
     <string name="map_snack_message_marker_added">Marker added</string>
+    <string name="map_create_new_event">Create new event</string>
+    <string name="map_event_name">Event name</string>
+    <string name="map_detail">Detail</string>
 
 </resources>
