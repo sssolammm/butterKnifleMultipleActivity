@@ -21,10 +21,11 @@ public class EventStatic extends SugarRecord {
 
     public EventStatic() { }
 
-    public EventStatic(String name, Double longitude, Double latitude){
+    public EventStatic(String name, Double longitude, Double latitude, String detail){
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.detail = detail;
     }
 
     public String getName() {

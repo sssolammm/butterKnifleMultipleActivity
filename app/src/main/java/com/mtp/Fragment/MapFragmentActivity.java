@@ -1,62 +1,17 @@
 package com.mtp.Fragment;
-//
-//import android.os.Bundle;
-//import android.support.annotation.Nullable;
-//import android.support.v4.app.Fragment;
-//import android.view.LayoutInflater;
-//import android.view.Menu;
-//import android.view.MenuItem;
-//import android.view.View;
-//import android.view.ViewGroup;
-//
-//import com.google.android.gms.maps.CameraUpdateFactory;
-//import com.google.android.gms.maps.GoogleMap;
-//import com.google.android.gms.maps.OnMapReadyCallback;
-//import com.google.android.gms.maps.SupportMapFragment;
-//import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-//import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.gms.maps.model.MarkerOptions;
-//import com.mtp.DAO.StaticLocationDao;
-//import com.mtp.Model.StaticLocation;
-//import com.mtp.R;
-//
-//
-//public class MapFragmentActivity extends Fragment implements OnMapReadyCallback {
-//
-//    private GoogleMap mMap;
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-////        getMapAsync(this);
-//        return rootView;
-//    }
-//
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//
-//        for (StaticLocation staticLocation : StaticLocationDao.getAll()) {
-//            MarkerOptions markerOptions = new MarkerOptions().position(
-//                    new LatLng(staticLocation.getLatitude(), staticLocation.getLongitude()))
-//                    .title(staticLocation.getName())
-//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar));
-//            mMap.addMarker(markerOptions);
-//        }
-////        mMap.moveCamera(CameraUpdateFactory.newLatLng(
-////                new LatLng(staticLocation.getLatitude(), staticLocation.getLongitude())));
-//    }
-//}
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -78,13 +33,15 @@ public class MapFragmentActivity extends Fragment{
     private GoogleMap googleMap;
     private FloatingActionButton btAdd;
     private Boolean activatedAddMarker;
+    private CoordinatorLayout coordinatorLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_map_fragment, container, false);
 
         activatedAddMarker = false;
-        mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mMapView = rootView.findViewById(R.id.mapView);
+        coordinatorLayout = rootView.findViewById(R.id.mapCoodinatorLayout);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
@@ -108,15 +65,12 @@ public class MapFragmentActivity extends Fragment{
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
-
                 CustomInfoStaticEvent customInfoStaticEvent = new CustomInfoStaticEvent(getActivity());
                 mMap.setInfoWindowAdapter(customInfoStaticEvent);
-
 
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
-
                         Toast.makeText(getContext(), ((EventStatic) marker.getTag()).getDetail(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -126,67 +80,84 @@ public class MapFragmentActivity extends Fragment{
                             new LatLng(eventStatic.getLatitude(), eventStatic.getLongitude()))
                             .title(eventStatic.getName())
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar));
-//                    mMap.addMarker(markerOptions);
-
-//                    InfoWindowData info = new InfoWindowData();
-//                    info.setHotel("Hotel : excellent hotels available");
 
                     Marker m = mMap.addMarker(markerOptions);
                     m.setTag(eventStatic);
-//                    m.showInfoWindow();
-
                 }
-
 
                 //Fer servir aquesta animacio en un futur
                 // For zooming automatically to the location of the marker
 //                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
 //                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-                        marker.showInfoWindow();
-                        return true;
+                    marker.showInfoWindow();
+                    return true;
                     }
                 });
 
             }
         });
-
-
         return rootView;
     }
 
     private void createNewMarker() {
 
         if (activatedAddMarker) {
-            Resources res = getResources();
-            btAdd.setBackgroundDrawable(res.getDrawable(android.R.drawable.ic_input_add));
+            btAdd.setImageResource(android.R.drawable.ic_input_add);
 
             activatedAddMarker = false;
             googleMap.setOnMapClickListener(null);
         } else {
-            Resources res = getResources();
-            btAdd.setBackgroundDrawable(res.getDrawable(android.R.drawable.ic_input_delete));
+            btAdd.setImageResource(android.R.drawable.ic_delete);
 
             activatedAddMarker = true;
             googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
-                    MarkerOptions marker = new MarkerOptions().position(
-                            latLng)
-                            .title("Hello Maps ");
-                    marker.icon(BitmapDescriptorFactory
-                            .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                    googleMap.addMarker(marker);
+
+                    EventStatic eventStatic = new EventStatic("new marker", latLng.longitude,
+                            latLng.latitude, "Esto es un nuevo marker" );
+                    MarkerOptions markerOptions = new MarkerOptions().position(
+                            new LatLng(eventStatic.getLatitude(), eventStatic.getLongitude()))
+                            .title(eventStatic.getName())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar));
+
+                    Marker marker = googleMap.addMarker(markerOptions);
+                    marker.setTag(eventStatic);
+
+                    Snackbar snackbar = Snackbar.make(coordinatorLayout, getString(R.string.map_snack_message_marker_added),
+                            Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+
+                    View snackBarView = snackbar.getView();
+                    CoordinatorLayout.LayoutParams params=(CoordinatorLayout.LayoutParams) snackBarView.getLayoutParams();
+                    params.gravity = Gravity.TOP;
+                    snackBarView.setLayoutParams(params);
+
+                    int snackbarTextId = android.support.design.R.id.snackbar_text;
+                    TextView textView = (TextView)snackBarView.findViewById(snackbarTextId);
+                    textView.setTextColor(getResources().getColor(R.color.red_dark));
+
+                    snackBarView.setBackgroundColor(getResources().getColor(R.color.colorWood));
+
+
+//                    Snackbar snackbar = Snackbar
+//                            .make(constraintLayout, "Message is deleted", Snackbar.LENGTH_LONG)
+//                            .setAction("UNDO", new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    Snackbar snackbar1 = Snackbar.make(constraintLayout, "Marker Added", Snackbar.LENGTH_SHORT);
+//                                    snackbar1.show();
+//                                }
+//                            });
+
+                    snackbar.show();
                 }
             });
-
         }
-
-//        btAdd.setBackgroundDrawable();
     }
 
     @Override
