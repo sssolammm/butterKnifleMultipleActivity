@@ -1,6 +1,6 @@
 package com.mtp.Sync;
 
-import com.mtp.Model.EventStatic;
+import com.mtp.Model.EventPublished;
 import com.mtp.Utils.Constants;
 
 import java.util.List;
@@ -12,6 +12,8 @@ public interface RestRequests {
 
 
     @GET(Constants.BASE_URL + "coordinates")
-    Call<List<EventStatic>> getAllEventStatic();
+    Call<List<EventPublished>> getAllEventStatic();
+
+
 
 }
