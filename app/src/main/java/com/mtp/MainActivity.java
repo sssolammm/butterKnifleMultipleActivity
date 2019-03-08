@@ -71,8 +71,9 @@ public class MainActivity extends BaseActivity {
     LoginButton signInButtonFacebook;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+//    protected void onCreate(Bundle savedInstanceState) {
+    protected void setupUI() {
+//        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
 //        ButterKnife.bind(this);
 
@@ -254,6 +255,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void syncLocation(){
+        Intent intent = new Intent(getApplicationContext(), TabContainerActivity.class);
+        startActivity(intent);
+
         //Create a handler for the RetrofitInstance interface//
         RestRequests restRequests = RetrofitClient.getRetrofitInstance().create(RestRequests.class);
         Call<List<EventPublished>> call = restRequests.getAllEventStatic();
@@ -268,13 +272,12 @@ public class MainActivity extends BaseActivity {
                 }
                 Log.d("Error", "Location have been syncronized");
 
-                Intent intent = new Intent(getApplicationContext(), TabContainerActivity.class);
-                startActivity(intent);
             }
 
             @Override
             public void onFailure(Call<List<EventPublished>> call, Throwable throwable) {
                 Log.d("Error", "Location have not been syncronized");
+
             }
         });
     }

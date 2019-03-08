@@ -17,14 +17,27 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
+
+        setupUI();
     }
 
     @Override
-    protected  void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
+    public void onBackPressed() {
+        this.finish();
     }
 
+    //Nomes es fa servir per els fragments
+
+//    @Override
+//    protected  void onDestroy() {
+//        super.onDestroy();
+//        unbinder.unbind();
+//    }
+
     protected abstract int getLayoutResource();
+
+
+    //Si es fa el create en aquesta clase no cal fer el create a  cada activity
+    protected abstract void setupUI();
 }

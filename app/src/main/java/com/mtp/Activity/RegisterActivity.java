@@ -20,12 +20,13 @@ import static com.mtp.MainActivity.hideSoftKeyboard;
 
 public class RegisterActivity extends BaseActivity {
 
-//    @BindView(R.id.editText_username)
-//    EditText et;
+    @BindView(R.id.editText_password)
+    EditText et;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+//    protected void onCreate(Bundle savedInstanceState) {
+    protected void setupUI() {
+//        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_register);
 //        ButterKnife.bind(RegisterActivity.this);
 
@@ -47,11 +48,6 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_register;
-    }
-
-    @Override
-    public void onBackPressed() {
-        this.finish();
     }
 
 

@@ -13,14 +13,15 @@ import com.mtp.Fragment.FacebookFragment;
 import com.mtp.Fragment.MapFragmentActivity;
 import com.mtp.R;
 
-public abstract class TabContainerActivity extends BaseActivity {
+public class TabContainerActivity extends BaseActivity {
 
     private BottomNavigationView bottomNavigationView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_container);
+//    protected void onCreate(Bundle savedInstanceState) {
+    protected void setupUI() {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_tab_container);
 
         bottomNavigationView = findViewById(R.id.navigation_bottom);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,6 +43,11 @@ public abstract class TabContainerActivity extends BaseActivity {
         });
 
         bottomNavigationView.setSelectedItemId(R.id.navigation_map);
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_tab_container;
     }
 
     private boolean loadFragment(Fragment fragment) {
