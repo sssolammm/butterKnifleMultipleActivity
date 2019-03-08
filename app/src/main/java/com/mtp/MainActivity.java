@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,10 +25,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mtp.Activity.BaseActivity;
 import com.mtp.Activity.RegisterActivity;
 import com.mtp.Activity.TabContainerActivity;
-import com.mtp.DAO.EventStaticDao;
-import com.mtp.Model.EventStatic;
+import com.mtp.DAO.EventPublishedDao;
+import com.mtp.Model.EventPublished;
 import com.mtp.Sync.RestRequests;
 import com.mtp.Sync.RetrofitClient;
 import com.orm.SugarContext;
@@ -43,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     // ICON PAGE
     // https://icons8.com/icon/set/google/color
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+//        setContentView(R.layout.activity_main);
+//        ButterKnife.bind(this);
 
         SugarContext.init(this);
 
@@ -125,8 +125,10 @@ public class MainActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-
-
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_main;
+    }
 
     @Override
     public void onStart() {
@@ -238,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startRegisterActivity() {
+
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
@@ -253,15 +256,15 @@ public class MainActivity extends AppCompatActivity {
     private void syncLocation(){
         //Create a handler for the RetrofitInstance interface//
         RestRequests restRequests = RetrofitClient.getRetrofitInstance().create(RestRequests.class);
-        Call<List<EventStatic>> call = restRequests.getAllEventStatic();
+        Call<List<EventPublished>> call = restRequests.getAllEventStatic();
 
-        call.enqueue(new Callback<List<EventStatic>>() {
+        call.enqueue(new Callback<List<EventPublished>>() {
 
             @Override
-            public void onResponse(Call<List<EventStatic>> call, Response<List<EventStatic>> response) {
-                for ( EventStatic eventStatic : response.body()){
-                    if (!EventStaticDao.exist(eventStatic))
-                        EventStaticDao.insert(eventStatic);
+            public void onResponse(Call<List<EventPublished>> call, Response<List<EventPublished>> response) {
+                for ( EventPublished eventStatic : response.body()){
+                    if (!EventPublishedDao.exist(eventStatic))
+                        EventPublishedDao.insert(eventStatic);
                 }
                 Log.d("Error", "Location have been syncronized");
 
@@ -270,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<EventStatic>> call, Throwable throwable) {
+            public void onFailure(Call<List<EventPublished>> call, Throwable throwable) {
                 Log.d("Error", "Location have not been syncronized");
             }
         });

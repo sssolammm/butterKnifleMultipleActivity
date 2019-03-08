@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +23,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mtp.Adapter.CustomInfoStaticEvent;
-import com.mtp.DAO.EventStaticDao;
-import com.mtp.Model.EventStatic;
+import com.mtp.DAO.EventPublishedDao;
+import com.mtp.Model.EventPublished;
 import com.mtp.R;
 
 public class MapFragmentActivity extends Fragment{
@@ -70,14 +69,21 @@ public class MapFragmentActivity extends Fragment{
 //            ImageView image = (ImageView) dialog.findViewById(R.id.image);
 //            image.setImageResource(R.drawable.ic_launcher);
 
-//            Button dialogCreateButton = (Button) dialog.findViewById(R.id.bt_dialog_create_marker);
-//            // if button is clicked, close the custom dialog
-//                dialogCreateButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
+            Button btCreateEvent = dialog.findViewById(R.id.bt_create_event_dialog);
+                btCreateEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 //                    dialog.dismiss();
-//                }
-//            });
+                }
+            });
+
+            Button btCancel = dialog.findViewById(R.id.bt_cancel_dialog);
+                btCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
 
             dialog.show();
             }
@@ -94,18 +100,18 @@ public class MapFragmentActivity extends Fragment{
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
-                        Toast.makeText(getContext(), ((EventStatic) marker.getTag()).getDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), ((EventPublished) marker.getTag()).getDetail(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
-                for (EventStatic eventStatic : EventStaticDao.getAll()) {
+                for (EventPublished eventPublished : EventPublishedDao.getAll()) {
                     MarkerOptions markerOptions = new MarkerOptions().position(
-                            new LatLng(eventStatic.getLatitude(), eventStatic.getLongitude()))
-                            .title(eventStatic.getName())
+                            new LatLng(eventPublished.getLatitude(), eventPublished.getLongitude()))
+                            .title(eventPublished.getName())
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar));
 
                     Marker m = mMap.addMarker(markerOptions);
-                    m.setTag(eventStatic);
+                    m.setTag(eventPublished);
                 }
 
                 //Fer servir aquesta animacio en un futur
@@ -141,7 +147,7 @@ public class MapFragmentActivity extends Fragment{
                 @Override
                 public void onMapClick(LatLng latLng) {
 
-                    EventStatic eventStatic = new EventStatic("new marker", latLng.longitude,
+                    EventPublished eventStatic = new EventPublished("new marker", latLng.longitude,
                             latLng.latitude, "Esto es un nuevo marker" );
                     MarkerOptions markerOptions = new MarkerOptions().position(
                             new LatLng(eventStatic.getLatitude(), eventStatic.getLongitude()))

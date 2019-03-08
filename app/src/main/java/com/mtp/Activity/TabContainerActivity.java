@@ -13,7 +13,7 @@ import com.mtp.Fragment.FacebookFragment;
 import com.mtp.Fragment.MapFragmentActivity;
 import com.mtp.R;
 
-public class TabContainerActivity extends AppCompatActivity {
+public abstract class TabContainerActivity extends BaseActivity {
 
     private BottomNavigationView bottomNavigationView;
 

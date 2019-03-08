@@ -7,6 +7,11 @@
     <string name="login_username">Username</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_location">Map</string>
+
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+
     <string name="login_with_gmail">Login with Gmail</string>
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="login_password">Password</string>
@@ -16,7 +21,6 @@
     <string name="login_email">Email</string>
     <string name="login_register_now">Register now</string>
     <string name="login_no_account">No account?</string>
-    <string name="title_activity_location">Map</string>
 
     <string name="bottom_menu_facebook">Facebook</string>
     <string name="bottom_menu_map">Map</string>
